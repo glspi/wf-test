@@ -1,0 +1,14 @@
+name: test1
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: yolo
+        run: echo "hi hi!"
+        
