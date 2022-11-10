@@ -23,7 +23,7 @@ jobs:
           go-version: '1.19.x'
       - name: build
         run:
-          go build main.go -o hiworld
+          go build -o hiworld
       - name: run
         run:
           ./hiworld
