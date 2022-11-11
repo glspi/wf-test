@@ -41,7 +41,7 @@ jobs:
             artifact_name: hiworld
             asset_name: hiworld-${{ github.ref }}-macos-amd64
           - os: windows-latest
-            artifact_name: hiworld
+            artifact_name: hiworld.exe
             asset_name: hiworld-${{ github.ref }}-windows.exe
 
     runs-on: ${{ matrix.os }}
