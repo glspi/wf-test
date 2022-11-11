@@ -55,7 +55,7 @@ jobs:
           go build
       - name: run
         run:
-          ./{{ matrix.artifact_name }}
+          echo ./{{ matrix.artifact_name }}
       - name: upload assets
         uses: actions/upload-release-asset@v1
         env:
