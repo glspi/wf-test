@@ -22,9 +22,10 @@ jobs:
     steps:
       - name: Create Release-step
         id: create_release
-        uses: actions/create-release@v1
+        #uses: actions/create-release@v1
+        uses: elgohr/Github-Release-Action@v4
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
@@ -65,13 +66,3 @@ jobs:
           asset_name: ${{ matrix.asset_name }}
           asset_path: ${{ matrix.artifact_name }}
           asset_content_type: application/octet-stream
-      # - name: upload windows
-      #   if: matrix.platform == 'windows-latest'
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ needs.create_release.outputs.upload_url }}
-      #     asset_name: hiworld-${{ matrix.platform }}-${{ github.ref }}.exe
-      #     asset_path: ./hiworld
-      #     asset_content_type: application/octet-stream
