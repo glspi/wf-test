@@ -33,8 +33,17 @@ jobs:
     needs: create_release
     strategy:
       matrix:
-        platform: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{ matrix.platform }}
+        include:
+          - os: ubuntu-latest
+            asset_name: hiworld
+            artifact_name: hiworld-${{ github.ref }}-linux-amd64
+          - os: macos-latest
+            artifact_name: hiworld
+            asset_name: hiworld-${{ github.ref }}-macos-amd64
+          - os: windows-latest
+            artifact_name: hiworld-${{ github.ref }}-windows.exe
+
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v3
@@ -46,23 +55,22 @@ jobs:
       - name: run
         run:
           ./hiworld
-      - name: upload linux
-        if: matrix.platform != 'windows-latest'
+      - name: upload assets
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create_release.outputs.upload_url }}
-          asset_name: hiworld-${{ matrix.platform }}-${{ github.ref }}
-          asset_path: ./hiworld
+          asset_name: ${{ matrix.asset_name }}
+          asset_path: ./{{ matrix.artifact_name }}
           asset_content_type: application/octet-stream
-      - name: upload windows
-        if: matrix.platform == 'windows-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.create_release.outputs.upload_url }}
-          asset_name: hiworld-${{ matrix.platform }}-${{ github.ref }}.exe
-          asset_path: ./hiworld
-          asset_content_type: application/octet-stream
+      # - name: upload windows
+      #   if: matrix.platform == 'windows-latest'
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ needs.create_release.outputs.upload_url }}
+      #     asset_name: hiworld-${{ matrix.platform }}-${{ github.ref }}.exe
+      #     asset_path: ./hiworld
+      #     asset_content_type: application/octet-stream
