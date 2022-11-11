@@ -35,13 +35,14 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            asset_name: hiworld
-            artifact_name: hiworld-${{ github.ref }}-linux-amd64
+            artifact_name: hiworld
+            asset_name: hiworld-${{ github.ref }}-linux-amd64
           - os: macos-latest
             artifact_name: hiworld
             asset_name: hiworld-${{ github.ref }}-macos-amd64
           - os: windows-latest
-            artifact_name: hiworld-${{ github.ref }}-windows.exe
+            artifact_name: hiworld
+            asset_name: hiworld-${{ github.ref }}-windows.exe
 
     runs-on: ${{ matrix.os }}
     steps:
