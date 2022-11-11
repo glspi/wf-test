@@ -52,10 +52,10 @@ jobs:
           go-version: '1.19.x'
       - name: build
         run:
-          go build -o hiworld
+          go build
       - name: run
         run:
-          ./hiworld
+          ./{{ matrix.artifact_name }}
       - name: upload assets
         uses: actions/upload-release-asset@v1
         env:
