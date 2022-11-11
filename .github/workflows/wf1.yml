@@ -22,10 +22,9 @@ jobs:
     steps:
       - name: Create Release-step
         id: create_release
-        #uses: actions/create-release@v1
-        uses: elgohr/Github-Release-Action@v4
+        uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
@@ -54,9 +53,6 @@ jobs:
       - name: build
         run:
           go build
-      - name: run
-        run:
-          echo {{ matrix.artifact_name }}
       - name: upload assets
         uses: actions/upload-release-asset@v1
         env:
